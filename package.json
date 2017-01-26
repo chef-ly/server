@@ -1,0 +1,22 @@
+{
+  "name": "@chef.ly/server",
+  "version": "1.0.0",
+  "description": "Node.js server application for chef.ly",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chef-ly/server.git"
+  },
+  "author": "chef.ly",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chef-ly/server/issues"
+  },
+  "homepage": "https://github.com/chef-ly/server#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
