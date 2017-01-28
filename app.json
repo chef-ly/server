@@ -1,0 +1,8 @@
+{
+  "name": "chef.ly",
+  "description": "A barebones Node.js app using Express 4",
+  "repository": "https://github.com/chef-ly/server.git",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "chef.ly"],
+  "image": "heroku/nodejs"
+}
