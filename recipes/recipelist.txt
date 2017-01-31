@@ -1,4 +1,4 @@
-{"recipes": [
+[
   {
     "id": 1,
     "name": "Peanut Butter and Strawberry Jelly on Rye Bread",
@@ -41,6 +41,4 @@
     "time": 60,
     "level": "Medium"
   }
-  ]
-
-}
+]
