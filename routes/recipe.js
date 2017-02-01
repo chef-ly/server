@@ -10,7 +10,7 @@ router.get('/:id', function(req, res) {
 	//return the list of recipes
 	res.send(returnSingleRecipe(req.params.id));
 	res.end();
-	log.info('Request received at /recipe.', req.params);
+	log.info('GET received at /recipe.', req.params);
 });
 
 function returnSingleRecipe(id) {

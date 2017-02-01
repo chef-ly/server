@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
 	//return the list of recipes
 	res.send(returnList());
 	res.end();
-	log.info('Request received at /list.', req.params);
+	log.info('GET received at /list.', req.params);
 });
 
 function returnList() {

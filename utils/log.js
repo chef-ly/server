@@ -23,7 +23,7 @@ exports.warn = function(msg, metadata) {
 };
 
 exports.error = function(msg, metadata) {
-  loggaer.error(msg, metadata);
+  logger.error(msg, metadata);
   debug(msg);
 };
 
