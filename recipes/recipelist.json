@@ -1,46 +1,46 @@
-{"recipes": [
-  {
-    "id": 1,
-    "name": "Peanut Butter and Strawberry Jelly on Rye Bread",
-    "author": "David Chang",
-    "image_url": "http://www.todayifoundout.com/wp-content/uploads/2014/02/peanut-butter-and-jelly.jpg",
-    "rating": 5,
-    "categories": [
-      "snack",
-      "lunch",
-      "quick",
-      "easy"
-    ],
-    "time": 5,
-    "level": "Easy"
-  },
-  {
-    "id": 2,
-    "name": "Pepperoni Pizza",
-    "author": "Don Heins",
-    "image_url": "http://www.mysticpizza.com/admin/resources/pizza-pepperoni-w857h456.jpg",
-    "rating": 5,
-    "categories": [
-      "social",
-      "Italian"
-    ],
-    "time": 40,
-    "level": "Hard"
-  },
-  {
-    "id": 3,
-    "name": "Spaghetti and Meatballs",
-    "author": "Wolf Bruckner",
-    "image_url": "http://cookdiary.net/wp-content/uploads/images/Spaghetti_with_Meatballs_800.jpg",
-    "rating": 5,
-    "categories": [
-      "Italian",
-      "Pasta",
-      "Noodles"
-    ],
-    "time": 60,
-    "level": "Medium"
-  }
+{
+  "recipes": [
+    {
+      "id": 1,
+      "name": "Peanut Butter and Strawberry Jelly on Rye Bread",
+      "author": "David Chang",
+      "image_url": "http://www.todayifoundout.com/wp-content/uploads/2014/02/peanut-butter-and-jelly.jpg",
+      "rating": 5,
+      "categories": [
+        "snack",
+        "lunch",
+        "quick",
+        "easy"
+      ],
+      "time": 5,
+      "level": "Easy"
+    },
+    {
+      "id": 2,
+      "name": "Pepperoni Pizza",
+      "author": "Don Heins",
+      "image_url": "http://www.mysticpizza.com/admin/resources/pizza-pepperoni-w857h456.jpg",
+      "rating": 5,
+      "categories": [
+        "social",
+        "Italian"
+      ],
+      "time": 40,
+      "level": "Hard"
+    },
+    {
+      "id": 3,
+      "name": "Spaghetti and Meatballs",
+      "author": "Wolf Bruckner",
+      "image_url": "http://cookdiary.net/wp-content/uploads/images/Spaghetti_with_Meatballs_800.jpg",
+      "rating": 5,
+      "categories": [
+        "Italian",
+        "Pasta",
+        "Noodles"
+      ],
+      "time": 60,
+      "level": "Medium"
+    }
   ]
-
 }
