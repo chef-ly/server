@@ -35,4 +35,19 @@ Merging the dev branch to prod will rebuild the production server and should onl
 ```
 
 ## Documentation
+```
+To clone the Mongo loading instance:
+$ heroku login
+<login>
+<pasword>
 
+$ heroku git:clone -a blooming-shelf-46572
+
+$ cd blooming-shelf-46572
+
+To launch MongoDB web poratal:
+$ cd blooming-shelf-46572
+
+$ heroku addons:open mongolab
+
+```
