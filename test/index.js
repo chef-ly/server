@@ -42,4 +42,29 @@ describe('check routes', function() {
       });
     });
   });
+
+  describe('authenticate with test user', function() {
+    var options = {
+      uri: url + '/user/login',
+      method: 'POST',
+      json: {
+        "username": "testuser",
+        "password": "testpw"
+      }
+    };
+
+    it('return status of 200', function(done) {
+      request.post(options, function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+
+    it('return test token', function(done) {
+      request.post(options, function(error, response, body) {
+        expect(body.token).to.equal('testToken');
+        done();
+      });
+    });
+  });
 });
