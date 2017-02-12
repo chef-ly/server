@@ -42,4 +42,38 @@ describe('check routes', function() {
       });
     });
   });
+
+  describe('authenticate with test user', function() {
+    var options = {
+      uri: url + '/user/login',
+      method: 'POST',
+      json: {
+        "username": "testuser",
+        "password": "testpw"
+      }
+    };
+
+    it('return status of 200', function(done) {
+      request.post(options, function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+
+    it('return jwt token', function(done) {
+      request.post(options, function(error, response, body) {
+        expect(body).to.not.be.undefined;
+        done();
+      });
+    });
+  });
+
+  describe('get a profile page', function() {
+    it('return status of 401 not found error', function(done) {
+      request(url+'/user/profile', function(error, response, body) {
+        expect(response.statusCode).to.equal(401);
+        done();
+      });
+    });
+  });
 });
