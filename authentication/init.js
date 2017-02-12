@@ -1,8 +1,10 @@
 'use strict';
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const log = require('../utils/log');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var log = require('../utils/log');
+var mongoose = require('mongoose');
+var User = mongoose.model('User');
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
@@ -19,14 +21,15 @@ passport.use(new LocalStrategy(
         });
       }
 
-      // Incorrect password
-      if (password !== user.password) {
-        return done(null, false, {
-          message: 'Incorrect pasword'
-        });
-      }
-
-      return done(null, user);
+      user.validPassword(password, function(err, res) {
+        if (res) {
+          return done(null, user);
+        } else {
+          return done(null, false, {
+            message: 'Incorrect password'
+          }); 
+        }
+      });
     });
   }
 ));
@@ -34,10 +37,15 @@ passport.use(new LocalStrategy(
 function validate(username, callback) {
   // TODO: we need to access the DB here to check username and password
 
-  var testuser = {
-    username: 'testuser',
-    password: 'testpw'
-  };
+  var testuser = new User();
 
-  return callback(null, testuser);
+  testuser.username = 'testuser';
+  testuser.setPassword('testpw', function(err, user) {
+    if (err) {
+      log.error(err);
+      return callback(err);
+    } else {
+      return callback(null, user);
+    }
+  });
 }

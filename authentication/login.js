@@ -1,6 +1,7 @@
 'use strict';
 
 var passport = require('passport');
+var log = require('../utils/log');
 
 function login(req, res) {
 	passport.authenticate('local', function(err, user, info) {
@@ -10,11 +11,16 @@ function login(req, res) {
       return;
     }
 
-    // If a user is found
-    if(user){
-      var token = 'testToken';
+    if (user) {
+      // If a user is found
+      var token = user.generateJwt();
+
       res.status(200).json({
         "token" : token
+      });
+
+      log.info('User has successfully authenticated.', {
+        username: user.username
       });
     } else {
       // If user is not found
