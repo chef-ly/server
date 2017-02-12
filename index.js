@@ -20,6 +20,14 @@ app.use(passport.initialize());
 
 app.use(require('./routes'));
 
+// Error handler
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json({"message" : err.name + ": " + err.message});
+  }
+});
+
 // Determine port number
 app.set('port', (process.env.PORT || 5000));
 

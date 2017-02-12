@@ -67,4 +67,13 @@ describe('check routes', function() {
       });
     });
   });
+
+  describe('get a profile page', function() {
+    it('return status of 401 not found error', function(done) {
+      request(url+'/user/profile', function(error, response, body) {
+        expect(response.statusCode).to.equal(401);
+        done();
+      });
+    });
+  });
 });
