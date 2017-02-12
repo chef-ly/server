@@ -6,14 +6,14 @@ var passport = require('passport');
 var expressJwt = require('express-jwt');
 
 var auth = expressJwt({
-	//TODO: BAD BAD BAD BAD BAD BAD remove from code and use env variables!!!!!!!!
-	secret: 'cheflysupersecretsecret' 
+  //TODO: BAD BAD BAD BAD BAD BAD remove from code and use env variables!!!!!!!!
+  secret: 'cheflysupersecretsecret' 
 })
 
 router.post('/login', require('../authentication').login);
 
 router.get('/profile', auth, function(req, res) {
-	res.status(200).send('PROFILE PAGE');
+  res.status(200).send('PROFILE PAGE');
 });
 
 module.exports = router;

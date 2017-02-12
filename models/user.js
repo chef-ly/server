@@ -18,24 +18,24 @@ var userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.setPassword = function(password, callback) {
-	var Me = this;
-	bcrypt.genSalt(saltRounds, function(err, salt) {
-		Me.salt = salt;
-		bcrypt.hash(password, salt, function(err, hash) {
-			Me.hash = hash;
-			return callback(null, Me);
-		});
-	});
+  var Me = this;
+  bcrypt.genSalt(saltRounds, function(err, salt) {
+    Me.salt = salt;
+    bcrypt.hash(password, salt, function(err, hash) {
+      Me.hash = hash;
+      return callback(null, Me);
+    });
+  });
 };
 
 userSchema.methods.validPassword = function(password, callback) {
-	bcrypt.compare(password, this.hash, function(err, res) {
-		if (err) {
-			log.error(err);
-		} else {
-			return callback(null, res);
-		}
-	});
+  bcrypt.compare(password, this.hash, function(err, res) {
+    if (err) {
+      log.error(err);
+    } else {
+      return callback(null, res);
+    }
+  });
 };
 
 userSchema.methods.generateJwt = function() {
