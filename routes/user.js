@@ -11,6 +11,7 @@ var auth = expressJwt({
 })
 
 router.post('/login', require('../authentication').login);
+router.post('/register', require('../authentication').register);
 
 router.get('/profile', auth, function(req, res) {
   res.status(200).send('PROFILE PAGE');
