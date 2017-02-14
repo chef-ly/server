@@ -69,9 +69,27 @@ describe('check routes', function() {
   });
 
   describe('get a profile page', function() {
-    it('return status of 401 not found error', function(done) {
+    it('return status of 401 unauthorized', function(done) {
       request(url+'/user/profile', function(error, response, body) {
         expect(response.statusCode).to.equal(401);
+        done();
+      });
+    });
+  });
+
+  describe('register a new user', function() {
+    var options = {
+      uri: url + '/user/register',
+      method: 'POST',
+      json: {
+        "username": "newUsername",
+        "password": "newPassword"
+      }
+    };
+
+    it('return status of 200', function(done) {
+      request.post(options, function(error, response, body) {
+        expect(response.statusCode).to.equal(200);
         done();
       });
     });

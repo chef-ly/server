@@ -3,7 +3,7 @@
 var passport = require('passport');
 var log = require('../utils/log');
 var mongoose = require('mongoose');
-var User = mongoose.mode('User');
+var User = mongoose.model('User');
 
 function register(req, res) {
   if (!req.body.username || !req.body.password) {

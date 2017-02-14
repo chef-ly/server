@@ -4,6 +4,8 @@ var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
 
+mongoose.Promise = require('bluebird');
+
 mongoose.connect(dbURI);
 
 // CONNECTION EVENTS
