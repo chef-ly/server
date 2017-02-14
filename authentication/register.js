@@ -20,9 +20,13 @@ function register(req, res) {
     } else {
       user.save(function(err) {
         var token = user.generateJwt();
-        res.status(200);
-        res.json({
+        
+        res.status(200).json({
           "token" : token
+        });
+
+        log.info('User has successfully registered.', {
+          username: user.username
         });
       });
     }
