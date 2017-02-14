@@ -10,6 +10,8 @@ function register(req, res) {
     res.status(400).send('All username fields required');
   }
 
+  // TODO: Check if username already exists!
+
   var newUser = new User();
   newUser.username = req.body.username;
   newUser.setPassword(req.body.password, function(err, user) {
