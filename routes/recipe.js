@@ -9,7 +9,14 @@ var mongoose = require('mongoose'),
 
 router.get('/:id', function(req, res) {
 	//return the list of recipes
-	res.send(getMongoRecipe(req.params.id));
+	Recipe.find({ name: /Jelly/}, function (err, recipe) {
+		if(err) return console.error(err);
+		
+		console.log("looging id: "+req.params.id);
+		console.log("function var2: " + recipe);
+		
+		
+	});
 	res.end();
 });
 
@@ -20,12 +27,15 @@ function returnSingleRecipe(id) {
 	return data;
 }
 
-function getMongoRecipe(id) {
-	var data = JSON.parse( Recipe.find({ name: /jelly/ }, function (err, id) {
+function getMongoRecipe(name) {
+	 
+	Recipe.find({ name: /Jelly/}, function (err, recipe) {
 		if(err) return console.error(err);
-		console.log(id)
 		
-	}))
-	return data
+		console.log("looging id: "+name);
+		console.log("function var2: " + recipe);
+		
+	});
+
 }
 module.exports = router;

@@ -8,15 +8,23 @@ var recipeSchema = new Schema({
 	author: String,
 	description: String,
 	feeds: Number, 
-	time: Number,
-	rating: Number	
+
 });
 
 
-recipeSchema.methods.findByName = function(name, callback)
-{
+recipeSchema.methods.findByName = function(name, callback) {
+	
     return this.find({ name: new RegExp(name, 'i') },callback);
 };
 
+recipeSchema.methods.findById = function (id, callback) {
+	
+	return this.find({ id: new RegExp(id, 'i') }, callback);
+};
+
+recipeSchema.methods.searchDescriptions = function(description, callback) {
+	
+	return this.find({ name: '/'+description+'/'}, callback);
+};
 mongoose.model('recipe',recipeSchema);
 
