@@ -9,16 +9,33 @@ var mongoose = require('mongoose'),
 
 router.get('/:id', function(req, res) {
 	//return the list of recipes
-	Recipe.find({ name: /Jelly/}, function (err, recipe) {
+	Recipe.find({ name: new RegExp(req.params.id, 'i')}, function (err, recipe) {
 		if(err) return console.error(err);
 		
-		console.log("looging id: "+req.params.id);
+		console.log("logging id: "+req.params.id);
 		console.log("function var2: " + recipe);
 		
-		
+		res.send(recipe);
 	});
-	res.end();
 });
+
+router.post('/', function(req, res, next) {
+	if("name" in req.body && req.body.name !== '') {
+		next();
+	} else {
+		res.send(400);
+	}
+},
+	function(req,res,next) {
+		var insertRecipe = new Recipe;
+		Recipe.create(req.body, function(err, recipe) {
+			if(err)
+				return next(err);
+		});
+		res.send('recipe created!')
+	}
+);
+
 
 function returnSingleRecipe(id) {
 	var recipePath = path.join(__dirname, '..', 'recipes', 'recipedetail.json');

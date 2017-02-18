@@ -11,7 +11,7 @@ var recipeSchema = new Schema({
 
 });
 
-
+//Doesn't work ATM
 recipeSchema.methods.findByName = function(name, callback) {
 	
     return this.find({ name: new RegExp(name, 'i') },callback);
