@@ -1,11 +1,20 @@
 'use strict';
 
 var express = require('express');
-var router = express.Router();
+
 var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose'),
 	Recipe = mongoose.model('recipe');
+
+/* Needed if we want controllers from other files (see commented-out method below)
+require('../models/recipes');
+var recipeController = require('../controllers/recipe');
+*/
+
+var router = express.Router();
+
+
 
 router.get('/:id', function(req, res) {
 	//return the list of recipes
@@ -19,6 +28,13 @@ router.get('/:id', function(req, res) {
 	});
 });
 
+
+/*
+* We don't have this working yet.
+router.get('/:id', recipeController.index());
+*/
+
+//
 router.post('/', function(req, res, next) {
 	if("name" in req.body && req.body.name !== '') {
 		next();

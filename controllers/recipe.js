@@ -4,11 +4,12 @@ var controller = {};
 
 
 controller.index = [
-	function(req,res,name,next) {
+	function(req,res,next) {
 		//find all recipes by name
-		Recipe.find({ name: new RegExp(name, 'i') }, function(err, recipe) {
+		Recipe.find({ name: new RegExp('piz', 'i') }, function(err, recipe) {
 			if(err) return next(err);
 			console.log(recipe);
+			res.JSON(recipe);
 		});
 	}
 ];
