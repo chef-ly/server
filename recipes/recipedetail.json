@@ -1,0 +1,69 @@
+{
+  "id": 1,
+  "name": "Peanut Butter and Strawberry Jelly on Rye Bread",
+  "author": "David Chang",
+  "description": "A classic recipe for a classic dish: the Peanut Butter and Jelly Sandwich.",
+  "feeds": 1,
+  "total time": 3,
+  "categories": [
+    "snack",
+    "lunch",
+    "quick",
+    "easy"
+  ],
+  "rating": 5,
+  "level": "Easy",
+  "image": "http://www.todayifoundout.com/wp-content/uploads/2014/02/peanut-butter-and-jelly.jpg",
+  "ingredients": [
+    {
+      "ingredient": {
+        "name": "Rye Bread",
+        "uom": "slice",
+        "nutrition": []
+      },
+      "qty": 2
+    },
+    {
+      "ingredient": {
+        "name": "Peanut Butter",
+        "uom": "tbsp",
+        "nutrition": []
+      },
+      "qty": 2
+    },
+    {
+      "ingredient": {
+        "name": "Strawberry Jelly",
+        "uom": "tbsp",
+        "nutrition": []
+      },
+      "qty": 1
+    }
+  ],
+  "instructions": [
+    {
+      "step": 1,
+      "instruction": "Toast the Rye Bread in a toaster oven until desired level of toast is achieved.",
+      "nouns": [],
+      "verbs": []
+    },
+    {
+      "step": 2,
+      "instruction": "Spread the Peanut Butter on one slice of the Rye Bread.",
+      "nouns": [],
+      "verbs": []
+    },
+    {
+      "step": 3,
+      "instruction": "Spread the Strawberry Jelly on the other slice of the Rye Bread.",
+      "nouns": [],
+      "verbs": []
+    },
+    {
+      "step": 4,
+      "instruction": "Put the two slices of bread together with the Peanut Butter and Jelly in the middle.",
+      "nouns": [],
+      "verbs": []
+    }
+  ]
+}

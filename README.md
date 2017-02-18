@@ -1,18 +1,17 @@
-# node-js-getting-started
+# chefly
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
+A app using [Express 4](http://expressjs.com/).
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
 
 ## Running Locally
 
 Make sure you have [Node.js](http://nodejs.org/) and the [Heroku Toolbelt](https://toolbelt.heroku.com/) installed.
 
 ```sh
-$ git clone git@github.com:heroku/node-js-getting-started.git # or clone your own fork
-$ cd node-js-getting-started
+$ git pull
 $ npm install
-$ npm start
+$ heroku local
+
 ```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
@@ -20,20 +19,35 @@ Your app should now be running on [localhost:5000](http://localhost:5000/).
 ## Deploying to Heroku
 
 ```
-$ heroku create
-$ git push heroku master
-$ heroku open
-```
-or
+$ git add .
 
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
+$ git commit -m "what did you change"
+
+$ git push
+
+Merging your local branch with <dev|prod> will automatically rebuild and relaunch the server. 
+
+From your git hub page you can merge your branch to master:<dev|prod>
+
+Merge un-reviewed changes to dev, to rebuild the dev server and run tests.
+
+Merging the dev branch to prod will rebuild the production server and should only be done after code reviews.
+```
 
 ## Documentation
+```
+To clone the Mongo loading instance:
+$ heroku login
+<login>
+<pasword>
 
-For more information about using Node.js on Heroku, see these Dev Center articles:
+$ heroku git:clone -a blooming-shelf-46572
 
-- [Getting Started with Node.js on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-- [Heroku Node.js Support](https://devcenter.heroku.com/articles/nodejs-support)
-- [Node.js on Heroku](https://devcenter.heroku.com/categories/nodejs)
-- [Best Practices for Node.js Development](https://devcenter.heroku.com/articles/node-best-practices)
-- [Using WebSockets on Heroku with Node.js](https://devcenter.heroku.com/articles/node-websockets)
+$ cd blooming-shelf-46572
+
+To launch MongoDB web poratal:
+$ cd blooming-shelf-46572
+
+$ heroku addons:open mongolab
+
+```
