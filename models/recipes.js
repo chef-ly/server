@@ -26,5 +26,6 @@ recipeSchema.methods.searchDescriptions = function(description, callback) {
 	
 	return this.find({ name: '/'+description+'/'}, callback);
 };
+
 mongoose.model('recipe',recipeSchema);
 
