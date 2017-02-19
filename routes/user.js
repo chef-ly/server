@@ -7,7 +7,7 @@ var expressJwt = require('express-jwt');
 
 var auth = expressJwt({
   //TODO: BAD BAD BAD BAD BAD BAD remove from code and use env variables!!!!!!!!
-  secret: 'cheflysupersecretsecret' 
+  secret:  "secret"
 })
 
 router.post('/login', require('../authentication').login);

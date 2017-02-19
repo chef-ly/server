@@ -1,9 +1,11 @@
 'use strict';
 
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var jwt = require('jsonwebtoken');
 var log = require('../utils/log');
+
+const secret = process.env.SECRET_PHRASE;
 
 const saltRounds = 10;
 
@@ -46,7 +48,7 @@ userSchema.methods.generateJwt = function() {
     _id: this._id,
     username: this.username,
     exp: parseInt(expiry.getTime() / 1000),
-  }, "cheflysupersecretsecret"); // TODO: DO NOT KEEP YOUR SECRET IN THE CODE!
+  }, "secret"); // TODO: DO NOT KEEP YOUR SECRET IN THE CODE!
 };
 
 mongoose.model('User', userSchema);

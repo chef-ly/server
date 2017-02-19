@@ -2,7 +2,9 @@
 var log = require('../utils/log');
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = process.env.MONGODB_URI || 'mongodb://localhost:27017';
+
+var dbURI = process.env.MONGODB_URI || 
+  'mongodb://localhost:27017/chefly';
 
 mongoose.Promise = require('bluebird');
 
@@ -50,3 +52,4 @@ process.on('SIGTERM', function() {
 
 // BRING IN SCHEMAS & MODELS
 require('./user');
+require('./recipes');
