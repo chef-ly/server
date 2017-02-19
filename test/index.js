@@ -94,4 +94,21 @@ describe('check routes', function() {
       });
     });
   });
+
+  describe('register a bad user', function() {
+    var options = {
+      uri: url + '/user/register',
+      method: 'POST',
+      json: {
+        "username": "newUsername"
+      }
+    };
+
+    it('return status of 400', function(done) {
+      request.post(options, function(error, response, body) {
+        expect(response.statusCode).to.equal(400);
+        done();
+      });
+    });
+  });
 });
