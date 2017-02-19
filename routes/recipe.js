@@ -51,7 +51,23 @@ router.post('/', function(req, res, next) {
 		res.send('recipe created!')
 	}
 );
-
+//code below isnt working
+router.post('/:id.description', function(req, res, next) {
+	Recipe.findOne( {name: new RegExp((req.params.id), 'i')}, function (err, recipe) {
+		if(err) return next(err);
+		if (!recipe) return res.send(404);
+		req.recipe = recipe;
+		next();
+	});
+},
+funcrtion(req,res,next) {
+	for(key in in req.body){
+		req.recipe[key] = req.body[key];
+	}
+	req.recipe.save(runction(err,recipe) {
+		res.json(recipe);
+	})
+};
 
 function returnSingleRecipe(id) {
 	var recipePath = path.join(__dirname, '..', 'recipes', 'recipedetail.json');
