@@ -23,7 +23,7 @@ userSchema.methods.setPassword = function(password, callback) {
   var Me = this;
   bcrypt.genSalt(saltRounds, function(err, salt) {
     Me.salt = salt;
-    bcrypt.hash(password, salt, function(err, hash) {
+    bcrypt.hash(password, salt, null, function(err, hash) {
       Me.hash = hash;
       return callback(null, Me);
     });

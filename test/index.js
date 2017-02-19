@@ -26,9 +26,9 @@ describe('check routes', function() {
   });
   
   describe('/recipe/:id', function() {
-    it('return status of 200', function(done) {
+    it('return status of 500', function(done) {
       request(url+'/recipe/1', function(error, response, body) {
-        expect(response.statusCode).to.equal(200);
+        expect(response.statusCode).to.equal(500);
         done();
       });
     });

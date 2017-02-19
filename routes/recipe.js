@@ -19,9 +19,11 @@ var router = express.Router();
 router.get('/:id', function(req, res) {
 	//return the list of recipes
 	Recipe.findById(req.params.id, function (err, recipe) {
-		if(err) return console.error(err);
+		if (err) {
+      res.status(500).send('Error while finding recipe. id: ' + req.params.id);
+    }
 		
-		console.log("logging id: "+req.params.id);
+		console.log("logging id: " + req.params.id);
 		console.log("function var2: " + recipe);
 		
 		res.send(recipe);
