@@ -2,8 +2,11 @@
 var log = require('../utils/log');
 var mongoose = require('mongoose');
 var gracefulShutdown;
+
 var dbURI = process.env.MONGODB_URI || 
   'mongodb://localhost:27017/chefly';
+
+mongoose.Promise = require('bluebird');
 
 mongoose.connect(dbURI);
 
@@ -11,9 +14,11 @@ mongoose.connect(dbURI);
 mongoose.connection.on('connected', function() {
   log.info('Mongoose connected to ' + dbURI);
 });
+
 mongoose.connection.on('error', function(err) {
   log.info('Mongoose connection error: ' + err);
 });
+
 mongoose.connection.on('disconnected', function() {
   log.info('Mongoose disconnected');
 });
@@ -26,19 +31,19 @@ gracefulShutdown = function(msg, callback) {
     callback();
   });
 };
-// For nodemon restarts
+
 process.once('SIGUSR2', function() {
   gracefulShutdown('nodemon restart', function() {
     process.kill(process.pid, 'SIGUSR2');
   });
 });
-// For app termination
+
 process.on('SIGINT', function() {
   gracefulShutdown('app termination', function() {
     process.exit(0);
   });
 });
-// For Heroku app termination
+
 process.on('SIGTERM', function() {
   gracefulShutdown('Heroku app termination', function() {
     process.exit(0);
