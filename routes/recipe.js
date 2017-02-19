@@ -18,7 +18,7 @@ var router = express.Router();
 
 router.get('/:id', function(req, res) {
 	//return the list of recipes
-	Recipe.find({ name: new RegExp(req.params.id, 'i')}, function (err, recipe) {
+	Recipe.findById(req.params.id, function (err, recipe) {
 		if(err) return console.error(err);
 		
 		console.log("logging id: "+req.params.id);
@@ -52,6 +52,7 @@ router.post('/', function(req, res, next) {
 	}
 );
 //code below isnt working
+/*
 router.post('/:id.description', function(req, res, next) {
 	Recipe.findOne( {name: new RegExp((req.params.id), 'i')}, function (err, recipe) {
 		if(err) return next(err);
@@ -60,7 +61,7 @@ router.post('/:id.description', function(req, res, next) {
 		next();
 	});
 },
-funcrtion(req,res,next) {
+function(req,res,next) {
 	for(key in in req.body){
 		req.recipe[key] = req.body[key];
 	}
@@ -68,6 +69,7 @@ funcrtion(req,res,next) {
 		res.json(recipe);
 	})
 };
+*/
 
 function returnSingleRecipe(id) {
 	var recipePath = path.join(__dirname, '..', 'recipes', 'recipedetail.json');

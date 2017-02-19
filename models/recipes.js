@@ -1,14 +1,37 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var ingredient = new Schema({
+	name: String,
+	uom: String,
+	nutition: []
+});
+
+var instruction = new Schema({
+	step:  Number,
+	instruction: String,
+	nouns: [],
+	verbs: []
+});
+
+var kind = new Schema({
+	kind: String
+});
+
 var recipeSchema = new Schema({
 	// TODO recipe schema
-	id: Number,
+	
 	name: {type: String, required: true, unique: false},
 	author: String,
+	image_url: String,
 	description: String,
-	feeds: Number, 
-
+	feeds: Number,
+	rating: Number,
+	categories: [ kind ],
+	time: Number,
+	level: String,
+	ingredients: [ ingredient],
+instructions: [ instruction]
 });
 
 //Doesn't work ATM
@@ -26,6 +49,7 @@ recipeSchema.methods.searchDescriptions = function(description, callback) {
 	
 	return this.find({ name: '/'+description+'/'}, callback);
 };
+
 
 mongoose.model('recipe',recipeSchema);
 
