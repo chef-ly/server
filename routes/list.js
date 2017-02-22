@@ -2,6 +2,7 @@
 
 var express = require('express');
 var router = express.Router();
+var log = require('../utils/log');
 var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose');
@@ -17,6 +18,7 @@ router.get('/', function(req, res) {
 		if(err) console.error(err);
 	
 		recipesObject[key] = recipes;
+		log.info('list recipes returned');
 		res.send(JSON.stringify(recipesObject));
 	});
 	
@@ -27,11 +29,5 @@ router.get('/test', function(req, res) {
 	res.end();
 });
 
-function returnList(fileName) {
-	var listPath = path.join(__dirname, '..', 'recipes', fileName);
-	var listJson = fs.readFileSync(listPath, 'utf8');
-	var data = JSON.parse(listJson);
-	return data;
-}
 
 module.exports = router;
