@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-var log 	= require('util-logging');
+var log = require('../utils/log');
 var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose'),
@@ -13,7 +13,7 @@ var recipeController = require('../controllers/recipe');
 */
 
 var router = express.Router();
-var logger = new log.ConsoleLogger().setLevel(log.Level.INFO);
+var log = new log.Consolelog().setLevel(log.Level.INFO);
 
 //Return a recipe based off the given MongoDB id.
 router.get('/:id', function(req, res) {
@@ -23,8 +23,8 @@ router.get('/:id', function(req, res) {
       		res.status(500).send('Error while finding recipe. id: ' + req.params.id);
     }
 		
-		logger.info("logging id: " + req.params.id);
-		logger.info("function var2: " + recipe);
+		log.info("logging id: " + req.params.id);
+		log.info("function var2: " + recipe);
 		
 		res.send(recipe);
 	});
@@ -87,8 +87,8 @@ function getMongoRecipe(name) {
 	Recipe.find({ name: /Jelly/}, function (err, recipe) {
 		if(err) return console.error(err);
 		
-		logger.info("logging id: "+name);
-		logger.info("function var2: " + recipe);
+		log.info("logging id: "+name);
+		log.info("function var2: " + recipe);
 		
 	});
 
