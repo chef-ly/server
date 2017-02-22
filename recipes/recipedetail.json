@@ -6,10 +6,10 @@
   "feeds": 1,
   "total time": 3,
   "categories": [
-    "snack",
-    "lunch",
-    "quick",
-    "easy"
+    {"kind":"snack"},
+    {"kind":"lunch"},
+    {"kind":"tasty"},
+    {"kind":"easy"}
   ],
   "rating": 5,
   "level": "Easy",

@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-
+var log 	= require('util-logging');
 var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose'),
@@ -13,18 +13,18 @@ var recipeController = require('../controllers/recipe');
 */
 
 var router = express.Router();
+var logger = new log.ConsoleLogger().setLevel(log.Level.INFO);
 
-
-
+//Return a recipe based off the given MongoDB id.
 router.get('/:id', function(req, res) {
-	//return the list of recipes
+
 	Recipe.findById(req.params.id, function (err, recipe) {
 		if (err) {
-      res.status(500).send('Error while finding recipe. id: ' + req.params.id);
+      		res.status(500).send('Error while finding recipe. id: ' + req.params.id);
     }
 		
-		console.log("logging id: " + req.params.id);
-		console.log("function var2: " + recipe);
+		logger.info("logging id: " + req.params.id);
+		logger.info("function var2: " + recipe);
 		
 		res.send(recipe);
 	});
@@ -48,9 +48,9 @@ router.post('/', function(req, res, next) {
 		var insertRecipe = new Recipe;
 		Recipe.create(req.body, function(err, recipe) {
 			if(err)
-				console.log("create err");
 				return next(err);
 		});
+
 		res.send('recipe created!');
 	}
 );
@@ -87,8 +87,8 @@ function getMongoRecipe(name) {
 	Recipe.find({ name: /Jelly/}, function (err, recipe) {
 		if(err) return console.error(err);
 		
-		console.log("looging id: "+name);
-		console.log("function var2: " + recipe);
+		logger.info("logging id: "+name);
+		logger.info("function var2: " + recipe);
 		
 	});
 

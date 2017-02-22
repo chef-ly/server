@@ -7,8 +7,10 @@ var path = require('path');
 var mongoose = require('mongoose');
 var Recipe = mongoose.model('recipe');
 
+//Return the list of recipes.
+//TODO: stub recipes
 router.get('/', function(req, res) {
-	//return the list of recipes
+
 	var recipesObject = {};
 	var key = 'recipes';
 	Recipe.find({}, function(err, recipes){
