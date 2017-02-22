@@ -14,27 +14,24 @@ var instruction = new Schema({
 	verbs: []
 });
 
-var kind = new Schema({
-	kind: String
-});
 
 var recipeSchema = new Schema({
-	// TODO recipe schema
-	
+
 	name: {type: String, required: true, unique: false},
 	author: String,
 	image_url: String,
 	description: String,
 	feeds: Number,
 	rating: Number,
-	categories: [ kind ],
+	level: String,
+	categories: {type: Array, "default": []},
 	time: Number,
 	level: String,
 	ingredients: [ ingredient],
-instructions: [ instruction]
+	instructions: [instruction]
 });
 
-//Doesn't work ATM
+
 recipeSchema.methods.findByName = function(name, callback) {
 	
     return this.find({ name: new RegExp(name, 'i') },callback);

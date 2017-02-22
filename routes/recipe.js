@@ -1,7 +1,7 @@
 'use strict';
 
 var express = require('express');
-
+var log = require('../utils/log');
 var fs = require('fs');
 var path = require('path');
 var mongoose = require('mongoose'),
@@ -13,18 +13,18 @@ var recipeController = require('../controllers/recipe');
 */
 
 var router = express.Router();
+var log = new log.Consolelog().setLevel(log.Level.INFO);
 
-
-
+//Return a recipe based off the given MongoDB id.
 router.get('/:id', function(req, res) {
-	//return the list of recipes
+
 	Recipe.findById(req.params.id, function (err, recipe) {
 		if (err) {
-      res.status(500).send('Error while finding recipe. id: ' + req.params.id);
+      		res.status(500).send('Error while finding recipe. id: ' + req.params.id);
     }
 		
-		console.log("logging id: " + req.params.id);
-		console.log("function var2: " + recipe);
+		log.info("logging id: " + req.params.id);
+		log.info("function var2: " + recipe);
 		
 		res.send(recipe);
 	});
@@ -50,9 +50,11 @@ router.post('/', function(req, res, next) {
 			if(err)
 				return next(err);
 		});
-		res.send('recipe created!')
+
+		res.send('recipe created!');
 	}
 );
+
 //code below isnt working
 /*
 router.post('/:id.description', function(req, res, next) {
@@ -85,8 +87,8 @@ function getMongoRecipe(name) {
 	Recipe.find({ name: /Jelly/}, function (err, recipe) {
 		if(err) return console.error(err);
 		
-		console.log("looging id: "+name);
-		console.log("function var2: " + recipe);
+		log.info("logging id: "+name);
+		log.info("function var2: " + recipe);
 		
 	});
 
