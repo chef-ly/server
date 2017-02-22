@@ -48,11 +48,13 @@ router.post('/', function(req, res, next) {
 		var insertRecipe = new Recipe;
 		Recipe.create(req.body, function(err, recipe) {
 			if(err)
+				console.log("create err");
 				return next(err);
 		});
-		res.send('recipe created!')
+		res.send('recipe created!');
 	}
 );
+
 //code below isnt working
 /*
 router.post('/:id.description', function(req, res, next) {
