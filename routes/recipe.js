@@ -13,7 +13,6 @@ var recipeController = require('../controllers/recipe');
 */
 
 var router = express.Router();
-var log = new log.Consolelog().setLevel(log.Level.INFO);
 
 //Return a recipe based off the given MongoDB id.
 router.get('/:id', function(req, res) {

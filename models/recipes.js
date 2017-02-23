@@ -50,3 +50,5 @@ recipeSchema.methods.searchDescriptions = function(description, callback) {
 
 mongoose.model('recipe',recipeSchema);
 
+
+
