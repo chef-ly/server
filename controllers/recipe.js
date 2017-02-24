@@ -1,28 +1,53 @@
 var mongoose = require('mongoose');
+var log = require('../utils/log');
 var Recipe = mongoose.model('Recipe');
-var controller = {};
 
+module.exports = {
+  findById: function (req, res, next) {
+    Recipe.findById(req.params.id, function (err, recipe) {
+      if (err) {
+        res.status(500).send('Error while finding recipe. id: ' + req.params.id);
+      } else {
+        log.info("logging id: " + req.params.id);
+        log.info("function var2: " + recipe);
+        res.send(recipe);
+      }
+    });
+  },
 
-controller.index = [
-	function(req,res,next) {
-		//find all recipes by name
-		Recipe.find({ name: new RegExp('piz', 'i') }, function(err, recipe) {
-			if(err) return next(err);
-			console.log(recipe);
-			res.JSON(recipe);
-		});
-	}
-];
-/*
-recipeSchema.methods.findByRecipeId = function (id, callback) {
-	
-	console.log('Finding by Id: ' + id)
-	return this.find({ id: new RegExp(id, 'i') }, callback);
-};
+  saveRecipeArgCheck: function(req, res, next) {
+    if("name" in req.body && req.body.name !== '') {
+      next();
+    } else {
+      res.send(400);
+    }
+  },
 
-recipeSchema.methods.searchDescriptions = function(description, callback) {
-	
-	console.log('searching by description');
-	return this.find({ name: '/'+description+'/'}, callback);
-};
-*/
+  saveRecipe: function(req, res, next) {
+    var insertRecipe = new Recipe;
+    Recipe.create(req.body, function(err, recipe) {
+      if (err) {
+        return next(err);
+      } else {
+        res.send('recipe created!');
+      }
+    });
+  },
+
+  findList: function (req, res, next) {
+    var recipesObject = {};
+    var key = 'recipes';
+    Recipe.find({}, function(err, recipes){
+      if(err) console.error(err);
+    
+      recipesObject[key] = recipes;
+      log.info('list recipes returned');
+      res.send(JSON.stringify(recipesObject));
+    });
+  },
+
+  testList: function(req, res, next) {
+    res.send('This endpoint is for testing.');
+    res.end();
+  }
+}
