@@ -48,7 +48,7 @@ recipeSchema.methods.searchDescriptions = function(description, callback) {
 };
 
 
-mongoose.model('recipe',recipeSchema);
+mongoose.model('Recipe',recipeSchema);
 
 
 
