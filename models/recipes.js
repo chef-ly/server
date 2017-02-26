@@ -4,7 +4,8 @@ var Schema = mongoose.Schema;
 var ingredient = new Schema({
 	name: String,
 	uom: String,
-	nutition: []
+	nutrition: [],
+	quantity: Number
 });
 
 var instruction = new Schema({
