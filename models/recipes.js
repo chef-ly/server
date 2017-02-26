@@ -26,7 +26,6 @@ var recipeSchema = new Schema({
 	level: String,
 	categories: {type: Array, "default": []},
 	time: Number,
-	level: String,
 	ingredients: [ ingredient],
 	instructions: [instruction]
 });
