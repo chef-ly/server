@@ -7,7 +7,6 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
     "test": "./node_modules/mocha/bin/mocha --reporter spec"
   },
   "dependencies": {
@@ -25,7 +24,6 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "request": "^2.79.0",
-    "utf-8-validate": "2.0.0",
     "winston": "^2.3.1"
   },
   "repository": {
