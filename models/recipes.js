@@ -4,8 +4,7 @@ var Schema = mongoose.Schema;
 var ingredient = new Schema({
 	name: String,
 	uom: String,
-	nutrition: [],
-	quantity: Number
+	nutrition: []
 });
 
 var instruction = new Schema({
@@ -15,6 +14,10 @@ var instruction = new Schema({
 	verbs: []
 });
 
+var ingredientQuant = new Schema({
+	ingredient: ingredient,
+	qty: Number
+})
 
 var recipeSchema = new Schema({
 
@@ -27,7 +30,7 @@ var recipeSchema = new Schema({
 	level: String,
 	categories: {type: Array, "default": []},
 	time: Number,
-	ingredients: [ ingredient],
+	ingredients: [ ingredientQuant],
 	instructions: [instruction]
 });
 
