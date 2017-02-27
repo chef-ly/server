@@ -27,7 +27,7 @@ var recipeSchema = new Schema({
 	categories: {type: Array, "default": []},
 	time: Number,
 	ingredients: [ ingredient],
-	instructions: [instruction]
+	instructions: {type: Array, "default": []}
 });
 
 
