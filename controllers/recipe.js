@@ -29,7 +29,7 @@ module.exports = {
       if (err) {
         return next(err);
       } else {
-        res.send('recipe created!');
+        res.send(recipe._id);
       }
     });
   },

@@ -27,27 +27,16 @@ $ git push
 
 Merging your local branch with <dev|prod> will automatically rebuild and relaunch the server. 
 
-From your git hub page you can merge your branch to master:<dev|prod>
-
-Merge un-reviewed changes to dev, to rebuild the dev server and run tests.
-
 Merging the dev branch to prod will rebuild the production server and should only be done after code reviews.
 ```
 
 ## Documentation
 ```
-To clone the Mongo loading instance:
+Steps to launch the mongoDB web interface
 $ heroku login
 <login>
 <pasword>
 
-$ heroku git:clone -a blooming-shelf-46572
-
-$ cd blooming-shelf-46572
-
-To launch MongoDB web poratal:
-$ cd blooming-shelf-46572
-
-$ heroku addons:open mongolab
+$ heroku addons:open mongolab --app chefly-prod
 
 ```
