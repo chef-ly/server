@@ -1,8 +1,13 @@
 {
-  "name": "Start on Heroku: Node.js",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "name": "Chefly Node.js server",
+  "description": "API server for chefly app",
+  "repository": "https://github.com/chefly/server",
   "keywords": ["node", "express", "static"],
-  "image": "heroku/nodejs"
+  "image": "heroku/nodejs",
+  "env": {
+    "INHERIT_THIS_CONFIG_VAR": {
+      "required": true
+    },
+    "DONT_INHERIT_THIS_CONFIG_VAR": "production"
+  }
 }
