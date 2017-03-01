@@ -37,10 +37,11 @@ module.exports = {
   findList: function (req, res, next) {
     var recipesObject = {};
     var key = 'recipes';
-    Recipe.find({}, function(err, recipes){
+    Recipe.find({}, '_id image name author rating categories time level', function(err, recipes){
       if(err) console.error(err);
-    
+
       recipesObject[key] = recipes;
+
       log.info('list recipes returned');
       res.send(JSON.stringify(recipesObject));
     });
