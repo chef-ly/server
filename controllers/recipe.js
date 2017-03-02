@@ -8,8 +8,8 @@ module.exports = {
       if (err) {
         res.status(500).send('Error while finding recipe. id: ' + req.params.id);
       } else {
-        log.info("logging id: " + req.params.id);
-        log.info("function var2: " + recipe);
+        log.info("Searching for recipe._id: " + req.params.id);
+        log.info("Returning: " + recipe);
         res.send(recipe);
       }
     });
@@ -38,7 +38,7 @@ module.exports = {
     var recipesObject = {};
     var key = 'recipes';
     Recipe.find({}, '_id image name author rating categories time level', function(err, recipes){
-      if(err) console.error(err);
+      if(err) log.error(err);
 
       recipesObject[key] = recipes;
 
@@ -46,7 +46,25 @@ module.exports = {
       res.send(JSON.stringify(recipesObject));
     });
   },
-
+  
+  findByName: function (req, res, next) {
+	var recipesObject = {};
+	  
+	Recipe.find({name: new RegExp(req.params.id, 'i')}, 
+	'_id image name author rating categories time level', function(err, recipes){
+		if(err) log.error(err);
+		
+		recipesObject['recipes'] = recipes;
+		
+		log.info('Searching recipe NAMES for: ' + req.params.id);
+		log.info('Found the folowing recipes: ');
+		log.info(JSON.stringify(recipesObject));
+		
+		res.send(JSON.stringify(recipesObject));
+		
+	});
+  },
+  
   testList: function(req, res, next) {
     res.send('This endpoint is for testing.');
     res.end();
