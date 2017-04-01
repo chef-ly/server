@@ -10,7 +10,7 @@ describe('first test', function() {
     });
   });
 });
-
+/*
 describe('check routes', function() {
   var port = process.env.PORT || 5000;
   var url = 'http://localhost:' + port;
@@ -120,3 +120,4 @@ describe('check routes', function() {
     });
   });
 });
+*/
