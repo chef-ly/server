@@ -4,13 +4,10 @@ var express = require('express');
 var router = express.Router();
 var controller = require('../controllers/recipe');
 
-//Return the list of recipes.
-//TODO: stub recipes
-router.get('/', controller.findList);
+// Get a random list of recipes
+router.get('/random', controller.findRandomList);
 
-//Return a list of recipes searching Name for the keyword(id)
-router.get('/name/:id', controller.findByName);
-
-router.get('/test', controller.testList);
+// Get a random list of recipes (limited by number of recipes)
+router.get('/random/:num', controller.findRandomList);
 
 module.exports = router;
