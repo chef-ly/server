@@ -1,9 +1,12 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 services: mongodb
 before_script:
-  - npm install
+- npm install
 script:
-  - node index.js &
-  - npm test
+- node index.js &
+- npm test
+env:
+  matrix:
+    secure: ntbHasvxOBd5XchSbM9ZJrvSRzz75ddo+xnOPxKEjyB/g2qmJFtXew/R66nK2y806o69Z1qyvS+4vGvRPXFthSOxGDn7hIU6rVFJjxuspE/OYMcQHEMGEYjKc4LZZw0/st8Tsxs15dl4CKbUu7zcm+ytpBsWG/QLm/2q+h5wcrPZG1Fkq7U1K0og2v7E7RnysKX00hDOpg2/E9rE/gqvXkvyfumRidJaDBoLXN8kJRAp2Gy4wkS3f+2TmZW3F3rIssZwPW/F++yPDFQ7YX1ZyYguRE6bQ42Z2WNQIJ/FHcQzXu9THKai81TIElf8SCLpcJ/P4WeBNzQS1AxDV9O8hbzt5ZIMm3WiAG/CMtMEhjTYaWXlZ4yfdKcNAFGfiB+BDxJNfyQC53ZeQS4Vu+8mj7dz0aduko+Md7Tp9p/W7AnhduOcE5PpGaRhjBtWyWvSC9b0594BhF6GZ3k/q7UMBFWU6JdwW1RzuVwIEvz0TqH03bGCUdRhk0gz5zfh6aVNEAa+PMFNyJOUPUqHsqnKxZ+UchaxOV34/AvLMFblmYH4L2R6RS68puYFuW3pve4Bi9RcV4yUFZ8FAvcjUaasTGecDU0zMkLaqh4KAIymIsPqQWE8dH+AV7uAksqZ+3vqxS9rCT5Kz6odEc+kBkUNEKPzTwVGXnTBV6On1WwiWoI=
