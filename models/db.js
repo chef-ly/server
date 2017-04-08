@@ -52,4 +52,3 @@ process.on('SIGTERM', function() {
 
 // BRING IN SCHEMAS & MODELS
 require('./user');
-require('./recipes');
