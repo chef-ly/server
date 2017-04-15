@@ -10,14 +10,7 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 
-// Bring in data model
-require('./models/db');
-
-// Initialize passport authentication
-var passport = require('passport');
-require('./authentication').init;
-app.use(passport.initialize());
-
+// Add routes
 app.use(require('./routes'));
 
 // Error handler
