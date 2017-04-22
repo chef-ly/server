@@ -49,3 +49,7 @@ process.on('SIGTERM', function() {
     process.exit(0);
   });
 });
+
+
+// Bring in schemas and models
+require('./user');

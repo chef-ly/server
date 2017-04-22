@@ -30,6 +30,8 @@ router.use('/list', require('./list'));
 
 router.use('/recipe', require('./recipe'));
 
+router.use('/user', verify, require('./user'));
+
 router.get('/', verify, function(req, res) {
   res.send('Home Page');
 });

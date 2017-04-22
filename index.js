@@ -10,6 +10,9 @@ app.use(morgan('dev'));
 
 app.use(bodyParser.json());
 
+// Bring in data model
+require('./models/db');
+
 // Add routes
 app.use(require('./routes'));
 

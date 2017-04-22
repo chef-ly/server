@@ -20,6 +20,23 @@ module.exports = {
     });
   },
 
+  getFavoriteRecipes: function(user) {
+    var allIds = '';
+    
+    user.favorites.forEach(function(element) {
+      allIds = allIds + element.id + ',';
+    }, function() {
+      options = {
+        url: hostname + '/recipes/informationBulk?ids=' + allIds,
+        headers: headers
+      };
+
+      request.get(options, function(err, response, body) {
+        return JSON.parse(body);
+      });
+    });
+  },
+
   findRandomList: function(req, res, next) {
     // Default to 5 random recipes unless otherwise specified
     var numberRecipes = 5;
