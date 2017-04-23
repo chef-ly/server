@@ -18,7 +18,7 @@ var verify = jwt({
   }),
 
   // Validate the audience and the issuer.
-  audience: 'https://chefly.auth0.com/api/v2/',
+  audience: 'https://chefly.auth0.com/api/',
   issuer: 'https://chefly.auth0.com/',
   algorithms: ['RS256']
 });
@@ -27,9 +27,9 @@ var verify = jwt({
  * Define the routes
  */
 router.use('/list', require('./list'));
-
 router.use('/recipe', require('./recipe'));
-
+router.use('/search', require('./search'));
+router.use('/user', verify, require('./user'));
 router.get('/', verify, function(req, res) {
   res.send('Home Page');
 });
