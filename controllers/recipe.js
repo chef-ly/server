@@ -56,5 +56,65 @@ module.exports = {
     request.get(options, function(err, response, body) {
       res.send(JSON.parse(body));
     });
+  },
+
+  findByIngredients: function(req, res, next) {
+    var ingredients = req.query.ingredients;
+
+    var options = {
+      url: hostname + '/recipes/findByIngredients',
+      qs: {
+        ingredients: ingredients,
+        number: 10
+      },
+      headers: headers
+    };
+
+    request.get(options, function(err, response, body) {
+      var list = JSON.parse(body);
+      var ids = "";
+      list.forEach(function(x) {
+        ids = ids + x.id + ',';
+      })
+      
+      options = {
+        url: hostname + '/recipes/informationBulk?ids=' + ids.slice(0, -1),
+        headers: headers
+      };
+
+      request.get(options, function(err, response, body) {
+        res.send(JSON.parse(body));
+      });
+    });
+  },
+
+  search: function(req, res, next) {
+    var q = req.query.q;
+
+    var options = {
+      url: hostname + '/recipes/search',
+      qs: {
+        query: q,
+        number: 10
+      },
+      headers: headers
+    };
+
+    request.get(options, function(err, response, body) {
+      var list = JSON.parse(body);
+      var ids = "";
+      list.results.forEach(function(x) {
+        ids = ids + x.id + ',';
+      })
+      
+      options = {
+        url: hostname + '/recipes/informationBulk?ids=' + ids.slice(0, -1),
+        headers: headers
+      };
+
+      request.get(options, function(err, response, body) {
+        res.send(JSON.parse(body));
+      });
+    });
   }
 }
