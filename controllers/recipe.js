@@ -1,5 +1,8 @@
 var request = require('request');
 
+const NodeCache = require("node-cache");
+const myCache = new NodeCache( { stdTTL: 100, checkperiod: 120 } );
+
 const hostname = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com'
 const spoonacularApiKey = process.env.SPOON_API_KEY;
 const headers = {
@@ -37,6 +40,7 @@ module.exports = {
     });
   },
 
+// Find Random Recipes
   findRandomList: function(req, res, next) {
     // Default to 5 random recipes unless otherwise specified
     var numberRecipes = 5;
@@ -53,9 +57,33 @@ module.exports = {
       headers:  headers
     };
 
-    request.get(options, function(err, response, body) {
-      res.send(JSON.parse(body));
-    });
+    // using node-cache for storing the body in json
+    // Try to access the item in myCache
+    console.info("Trying to get object from cache");
+    myCache.get("random", function(err, value){
+      if (!err){
+        if (value == undefined){
+          console.info("The cache for key: random, is not set");
+          console.info("Setting cashe...")
+
+          // if object not in cache perform get from spoon
+          request.get(options, function(err, response, body) {
+            console.info("sending query to spoonacular");
+            myCache.set("random", JSON.parse(body), function(err, success){
+              if ( !err && success){
+                console.info(success);
+                //console.info(JSON.parse(body));
+              }
+            });
+            res.send(JSON.parse(body));
+          });
+        } else {
+          console.info("Serving values from cache");
+          //console.info(value);
+          res.send(value);
+        }
+      }
+    })
   },
 
   findByIngredients: function(req, res, next) {
