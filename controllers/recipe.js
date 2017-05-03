@@ -18,9 +18,14 @@ module.exports = {
     };
 
     // Query spoonacular and get recipe summary by findById
-    request.get(options, function(err, response, body) {
-      res.send(JSON.parse(body));
-    });
+    // request.get(options, function(err, response, body) {
+    //   res.send(JSON.parse(body));
+    // });
+    cacheRequest(options, req.params.id, function(err, response){
+      if(!err){
+        res.send(response);
+      }
+    })
   },
 
   getFavoriteRecipes: function(user) {
@@ -56,7 +61,6 @@ module.exports = {
       },
       headers:  headers
     };
-
 
     // using node-cache for storing the body in json
     // Try to access the item in myCache
@@ -109,11 +113,15 @@ module.exports = {
       headers: headers
     };
 
-    request.get(options, function(err, response, body) {
-      var list = JSON.parse(body);
+    cacheRequest(options, q, function(err, result){
+      var list = result;
       var ids = "";
+      var idKey = "";
+
       list.results.forEach(function(x) {
         ids = ids + x.id + ',';
+        
+        idKey = idKey + x.id.toString()[1];
       })
       
       options = {
@@ -122,7 +130,7 @@ module.exports = {
       };
 
       // Using cache function, name request based on q
-      cacheRequest(options, q, function(err, result){
+      cacheRequest(options, q+idKey, function(err, result){
         if(!err){
           res.send(result);
         }
@@ -133,7 +141,7 @@ module.exports = {
 }
 
 function cacheRequest(options, name, callback){
-     // using node-cache for storing the body in json
+    // using node-cache for storing the body in json
     // Try to access the item in myCache
     name = name.toUpperCase();
     console.info("Trying to get object from cache: " + name);
