@@ -53,7 +53,7 @@ module.exports = {
         if (user != null && user.favorites.length > 0) {
           var allIds = '';
           user.favorites.forEach(function(element) {
-            allIds = allIds + element.recipeId + ',';
+            allIds = allIds + element + ',';
           });
           req.recipeIds = allIds;
           next();
@@ -64,18 +64,30 @@ module.exports = {
   },
 
   add: function(req, res, next) {
-    var newFavorite = { 'recipeId': req.params.id };
-    User.findOneAndUpdate({ 'email': req.email }, { $push: { favorites: newFavorite } }, function(err) {
-      if (err) {
-        res.status(500);
-        res.send("Error adding favorite");
-      } else {
+    User.findOne({ 'email': req.email }, function(err, user) {
+        if (err) next(err);
+
+        var ind = user.favorites.indexOf(req.params.id);
+        if (ind < 0) {
+          user.favorites.push(req.params.id);
+          user.save();
+        }
+
         res.send("Success");
-      }
     });
   },
 
   remove: function(req, res, next) {
-    res.send("Not implemented");
+    User.findOne({ 'email': req.email }, function(err, user) {
+        if (err) next(err);
+
+        var ind = user.favorites.indexOf(req.params.id);
+        if (ind > -1) {
+          user.favorites.splice(ind, 1);
+          user.save();
+        }
+
+        res.send("Success");
+    });
   }
 }

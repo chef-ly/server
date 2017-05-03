@@ -10,6 +10,6 @@ router.get('/favorites', controller.identifyUser, controller.checkUser, controll
 
 router.get('/favorites/add/:id', controller.identifyUser, controller.checkUser, controller.add);
 
-router.get('/favorites/remove/:id', controller.identifyUser, controller.add);
+router.get('/favorites/remove/:id', controller.identifyUser, controller.remove);
 
 module.exports = router;

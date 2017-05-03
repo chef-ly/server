@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
   email: String,
-  favorites: [{recipeId: Number}]
+  favorites: [Number]
 });
 
 mongoose.model('User', userSchema);
