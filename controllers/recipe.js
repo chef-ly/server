@@ -20,20 +20,14 @@ module.exports = {
     });
   },
 
-  getFavoriteRecipes: function(user) {
-    var allIds = '';
-    
-    user.favorites.forEach(function(element) {
-      allIds = allIds + element.id + ',';
-    }, function() {
-      options = {
-        url: hostname + '/recipes/informationBulk?ids=' + allIds,
-        headers: headers
-      };
+  getRecipesBulk: function(req, res, next) {
+    options = {
+      url: hostname + '/recipes/informationBulk?ids=' + req.recipeIds,
+      headers: headers
+    };
 
-      request.get(options, function(err, response, body) {
-        return JSON.parse(body);
-      });
+    request.get(options, function(err, response, body) {
+      res.send(JSON.parse(body));
     });
   },
 

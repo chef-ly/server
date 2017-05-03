@@ -18,7 +18,7 @@ var verify = jwt({
   }),
 
   // Validate the audience and the issuer.
-  audience: 'https://chefly.auth0.com/api/',
+  audience: 'chefly-api',
   issuer: 'https://chefly.auth0.com/',
   algorithms: ['RS256']
 });
