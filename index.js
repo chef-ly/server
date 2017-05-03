@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 require('./models/db');
 
 // Add routes
+app.use('/', express.static('public'));
 app.use(require('./routes'));
 
 // Error handler
