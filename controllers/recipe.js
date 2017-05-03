@@ -1,5 +1,8 @@
 var request = require('request');
 
+const NodeCache = require("node-cache");
+const myCache = new NodeCache( { stdTTL: 3600, checkperiod: 3600 } );
+
 const hostname = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com'
 const spoonacularApiKey = process.env.SPOON_API_KEY;
 const headers = {
@@ -15,9 +18,14 @@ module.exports = {
     };
 
     // Query spoonacular and get recipe summary by findById
-    request.get(options, function(err, response, body) {
-      res.send(JSON.parse(body));
-    });
+    // request.get(options, function(err, response, body) {
+    //   res.send(JSON.parse(body));
+    // });
+    cacheRequest(options, req.params.id, function(err, response){
+      if(!err){
+        res.send(response);
+      }
+    })
   },
 
   getRecipesBulk: function(req, res, next) {
@@ -31,6 +39,7 @@ module.exports = {
     });
   },
 
+// Find Random Recipes
   findRandomList: function(req, res, next) {
     // Default to 5 random recipes unless otherwise specified
     var numberRecipes = 5;
@@ -47,8 +56,12 @@ module.exports = {
       headers:  headers
     };
 
-    request.get(options, function(err, response, body) {
-      res.send(JSON.parse(body));
+    // using node-cache for storing the body in json
+    // Try to access the item in myCache
+    cacheRequest(options, "random", function(err, result){
+      if(!err){
+        res.send(result);
+      }
     });
   },
 
@@ -94,11 +107,15 @@ module.exports = {
       headers: headers
     };
 
-    request.get(options, function(err, response, body) {
-      var list = JSON.parse(body);
+    cacheRequest(options, q, function(err, result){
+      var list = result;
       var ids = "";
+      var idKey = "";
+
       list.results.forEach(function(x) {
         ids = ids + x.id + ',';
+        
+        idKey = idKey + x.id.toString()[1];
       })
       
       options = {
@@ -106,9 +123,44 @@ module.exports = {
         headers: headers
       };
 
-      request.get(options, function(err, response, body) {
-        res.send(JSON.parse(body));
+      // Using cache function, name request based on q
+      cacheRequest(options, q+idKey, function(err, result){
+        if(!err){
+          res.send(result);
+        }
       });
+
     });
   }
+}
+
+function cacheRequest(options, name, callback){
+    // using node-cache for storing the body in json
+    // Try to access the item in myCache
+    name = name.toUpperCase();
+    console.info("Trying to get object from cache: " + name);
+    myCache.get(name, function(err, value){
+      if (!err){
+        if (value == undefined){
+          console.info("The cache is not set for key: " + name );
+
+          // if object not in cache perform get from spoon
+          request.get(options, function(err, response, body) {
+            console.info("Sending query to spoonacular");
+            myCache.set(name, JSON.parse(body), function(err, success){
+              if ( !err && success){
+                console.info(success);
+                console.info("Setting cache for key: " + name);
+                //console.info(JSON.parse(body));
+              }
+            });
+            callback(null, JSON.parse(body));
+          });
+        } else {
+          console.info("Serving values from cache for: " + name);
+          //console.info(value);
+          callback(null, value);
+        }
+      }
+    })
 }
