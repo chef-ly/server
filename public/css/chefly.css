@@ -10,3 +10,19 @@
 .cover-heading {
   font-size: 65px;
 }
+
+.container-lower {
+  position: relative;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.description {
+  margin: 50px auto;
+  font-size: 17px;
+  text-align: left;
+}
+
+.email-input {
+  text-align: center;
+}
