@@ -1,5 +1,5 @@
 .full {
-  background: url('../images/food-kitchen-cutting-board-cooking.jpg') no-repeat center center fixed;
+  background: url('../images/food-kitchen-cutting-board-cooking.jpg') no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -9,4 +9,24 @@
 
 .cover-heading {
   font-size: 65px;
+}
+
+.container-lower {
+  position: relative;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.description {
+  margin: 50px auto;
+  font-size: 17px;
+  text-align: left;
+}
+
+.email-input {
+  text-align: center;
+}
+
+#error {
+  color: red;
 }
