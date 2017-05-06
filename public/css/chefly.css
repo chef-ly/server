@@ -1,5 +1,5 @@
 .full {
-  background: url('../images/food-kitchen-cutting-board-cooking.jpg') no-repeat center center fixed;
+  background: url('../images/food-kitchen-cutting-board-cooking.jpg') no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -25,4 +25,8 @@
 
 .email-input {
   text-align: center;
+}
+
+#error {
+  color: red;
 }
