@@ -4,7 +4,7 @@ $(function() {
 
     if (validateEmail(email)) {
       $.ajax({
-        url: '/alpha/signup/' + email,
+        url: '/signup/' + email,
       })
       .success(function(data) {
         $('#error').hide();

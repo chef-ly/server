@@ -30,5 +30,6 @@ router.use('/list', require('./list'));
 router.use('/recipe', require('./recipe'));
 router.use('/search', require('./search'));
 router.use('/user', verify, require('./user'));
+router.use('/signup', require('./signup'));
 
 module.exports = router;
