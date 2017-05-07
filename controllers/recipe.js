@@ -23,7 +23,7 @@ module.exports = {
     // });
     cacheRequest(options, req.params.id, function(err, response){
       if(!err){
-        res.send(response);
+        res.send(JSON.parse(response));
       }
     })
   },
@@ -35,7 +35,7 @@ module.exports = {
     };
 
     request.get(options, function(err, response, body) {
-      res.send(JSON.parse(body));
+      res.send(JSON.parse('{"recipes":'+body+'}'));
     });
   },
 
@@ -60,7 +60,7 @@ module.exports = {
     // Try to access the item in myCache
     cacheRequest(options, "random", function(err, result){
       if(!err){
-        res.send(result);
+        res.send(JSON.parse(result));
       }
     });
   },
@@ -90,7 +90,7 @@ module.exports = {
       };
 
       request.get(options, function(err, response, body) {
-        res.send(JSON.parse(body));
+        res.send(JSON.parse('{"recipes":'+body+'}'));
       });
     });
   },
@@ -108,7 +108,7 @@ module.exports = {
     };
 
     cacheRequest(options, q, function(err, result){
-      var list = result;
+      var list = JSON.parse(result);
       var ids = "";
       var idKey = "";
 
@@ -126,7 +126,7 @@ module.exports = {
       // Using cache function, name request based on q
       cacheRequest(options, q+idKey, function(err, result){
         if(!err){
-          res.send(result);
+          res.send(JSON.parse('{"recipes":'+result+'}'));
         }
       });
 
@@ -154,7 +154,7 @@ function cacheRequest(options, name, callback){
                 //console.info(JSON.parse(body));
               }
             });
-            callback(null, JSON.parse(body));
+            callback(null, body);
           });
         } else {
           console.info("Serving values from cache for: " + name);

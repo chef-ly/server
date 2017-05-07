@@ -77,6 +77,33 @@ module.exports = {
     });
   },
 
+  addBulk: function(req, res, next) {
+    // Get the json object in the body of the request
+    var add = JSON.parse(req.body.add);
+    var remove = JSON.parse(req.body.remove);
+
+    User.findOne({ 'email': req.email }, function(err, user) {
+        if (err) next(err);
+
+        add.forEach(function(id) {
+          var ind = user.favorites.indexOf(id);
+          if (ind < 0) {
+            user.favorites.push(id);
+          }
+        });
+
+        remove.forEach(function(id) {
+          var ind = user.favorites.indexOf(id);
+          if (ind > -1) {
+            user.favorites.splice(ind, 1);
+          }
+        });
+
+        user.save();
+        res.send("Success");
+    });
+  },
+
   remove: function(req, res, next) {
     User.findOne({ 'email': req.email }, function(err, user) {
         if (err) next(err);
