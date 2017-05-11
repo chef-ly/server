@@ -39,10 +39,12 @@ module.exports = {
             favorites: []
           });
 
-          newUser.save();
+          newUser.save(function() {
+            next();
+          });
+        } else {
+          next();
         }
-
-        next();
     });
   },
 
