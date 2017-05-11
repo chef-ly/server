@@ -24,6 +24,7 @@ module.exports = {
     cacheRequest(options, req.params.id, function(err, response){
       if(!err){
         res.send(JSON.parse(response));
+        next();
       }
     })
   },
@@ -135,32 +136,32 @@ module.exports = {
 }
 
 function cacheRequest(options, name, callback){
-    // using node-cache for storing the body in json
-    // Try to access the item in myCache
-    name = name.toUpperCase();
-    console.info("Trying to get object from cache: " + name);
-    myCache.get(name, function(err, value){
-      if (!err){
-        if (value == undefined){
-          console.info("The cache is not set for key: " + name );
+  // using node-cache for storing the body in json
+  // Try to access the item in myCache
+  name = name.toUpperCase();
+  console.info("Trying to get object from cache: " + name);
+  myCache.get(name, function(err, value){
+    if (!err) {
+      if (value == undefined){
+        console.info("The cache is not set for key: " + name );
 
-          // if object not in cache perform get from spoon
-          request.get(options, function(err, response, body) {
-            console.info("Sending query to spoonacular");
-            myCache.set(name, JSON.parse(body), function(err, success){
-              if ( !err && success){
-                console.info(success);
-                console.info("Setting cache for key: " + name);
-                //console.info(JSON.parse(body));
-              }
-            });
-            callback(null, body);
+        // if object not in cache perform get from spoon
+        request.get(options, function(err, response, body) {
+          console.info("Sending query to spoonacular");
+          myCache.set(name, JSON.parse(body), function(err, success){
+            if ( !err && success){
+              console.info(success);
+              console.info("Setting cache for key: " + name);
+              //console.info(JSON.parse(body));
+            }
           });
-        } else {
-          console.info("Serving values from cache for: " + name);
-          //console.info(value);
-          callback(null, value);
-        }
+          callback(null, body);
+        });
+      } else {
+        console.info("Serving values from cache for: " + name);
+        //console.info(value);
+        callback(null, value);
       }
-    })
+    }
+  })
 }
