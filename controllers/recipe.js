@@ -147,7 +147,7 @@ function cacheRequest(options, name, callback){
           // if object not in cache perform get from spoon
           request.get(options, function(err, response, body) {
             console.info("Sending query to spoonacular");
-            myCache.set(name, JSON.parse(body), function(err, success){
+            myCache.set(name, body, function(err, success){
               if ( !err && success){
                 console.info(success);
                 console.info("Setting cache for key: " + name);
