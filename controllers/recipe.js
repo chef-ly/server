@@ -62,7 +62,8 @@ module.exports = {
       if(!err){
         res.send(JSON.parse(result));
       } else {
-        console.error("Request error: " + err);
+        console.error("Request Error: " + err);
+        res.status(404).send("Spoonacular Error");
       }
     });
   },
@@ -156,18 +157,18 @@ function cacheRequest(options, name, callback){
           request.get(options, function(err, response, body) {
             
             if(body.includes("{\"message\":\"Ops")){
-              console.info("Error from spoonacular not cacheing");
+              console.info("Error from spoonacular not cacheing " + name);
               console.info("Spoonacular Response: " + body.substring(0,45));
 
               callback("ERROR from Spoonacular");
             } else if (body.includes("\"Too many requests.")){
-              console.info("Error from spoonacular not cacheing");
+              console.info("Error from spoonacular not cacheing " + name);
               console.info("Spoonacular Response: " + body.substring(0,45));
 
               callback("ERROR from Spoonacular");
               
             } else if(!body){
-              console.info("Error from spoonacular not cacheing");
+              console.info("Error from spoonacular not cacheing " + name);
               console.info("Spoonacular Response: " + body.substring(0,45));
 
               callback("ERROR from Spoonacular");
