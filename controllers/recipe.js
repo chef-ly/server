@@ -61,6 +61,8 @@ module.exports = {
     cacheRequest(options, "random", function(err, result){
       if(!err){
         res.send(JSON.parse(result));
+      } else {
+        console.error("Request error: " + err);
       }
     });
   },
@@ -109,28 +111,32 @@ module.exports = {
     };
 
     cacheRequest(options, q, function(err, result){
-      var list = JSON.parse(result);
-      var ids = "";
-      var idKey = "";
+      if(err){
+        console.info("ERROR: " + err);
+        res.status(404).send("Spoonacular Error");
+      } else {
+        var list = JSON.parse(result);
+        var ids = "";
+        var idKey = "";
 
-      list.results.forEach(function(x) {
-        ids = ids + x.id + ',';
+        list.results.forEach(function(x) {
+          ids = ids + x.id + ',';
+          
+          idKey = idKey + x.id.toString()[1];
+        })
         
-        idKey = idKey + x.id.toString()[1];
-      })
-      
-      options = {
-        url: hostname + '/recipes/informationBulk?ids=' + ids.slice(0, -1),
-        headers: headers
-      };
+        options = {
+          url: hostname + '/recipes/informationBulk?ids=' + ids.slice(0, -1),
+          headers: headers
+        };
 
-      // Using cache function, name request based on q
-      cacheRequest(options, q+idKey, function(err, result){
-        if(!err){
-          res.send(JSON.parse('{"recipes":'+result+'}'));
-        }
-      });
-
+        // Using cache function, name request based on q
+        cacheRequest(options, q+idKey, function(err, result){
+          if(!err){
+            res.send(JSON.parse('{"recipes":'+result+'}'));
+          }
+        });
+      }
     });
   }
 }
@@ -144,19 +150,40 @@ function cacheRequest(options, name, callback){
       if (!err){
         if (value == undefined){
           console.info("The cache is not set for key: " + name );
+          console.info("Sending query to spoonacular");
 
           // if object not in cache perform get from spoon
           request.get(options, function(err, response, body) {
-            console.info("Sending query to spoonacular");
-            console.info("Spoonacular Response: " + body.substring(0,15));
-            myCache.set(name, body, function(err, success){
-              if ( !err && success){
-                console.info(success);
-                console.info("Setting cache for key: " + name);
-                //console.info(JSON.parse(body));
-              }
-            });
+            
+            if(body.includes("{\"message\":\"Ops")){
+              console.info("Error from spoonacular not cacheing");
+              console.info("Spoonacular Response: " + body.substring(0,45));
+
+              callback("ERROR from Spoonacular");
+            } else if (body.includes("\"Too many requests.")){
+              console.info("Error from spoonacular not cacheing");
+              console.info("Spoonacular Response: " + body.substring(0,45));
+
+              callback("ERROR from Spoonacular");
+              
+            } else if(!body){
+              console.info("Error from spoonacular not cacheing");
+              console.info("Spoonacular Response: " + body.substring(0,45));
+
+              callback("ERROR from Spoonacular");
+
+            } else{
+              console.info("Spoonacular Response: " + body.substring(0,45));
+              myCache.set(name, body, function(err, success){
+                if ( !err && success){
+                  console.info(success);
+                  console.info("Setting cache for key: " + name);
+                  //console.info(JSON.parse(body));
+                }
+              });
+            
             callback(null, body);
+            }
           });
         } else {
           console.info("Serving values from cache for: " + name);
