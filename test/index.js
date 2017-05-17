@@ -30,4 +30,22 @@ describe('recipe controller tests', function() {
       });
     });
   });
+
+  describe('getRecipesBulk', function() {
+    it("should respond", function(done) {
+      var req,res,spy,reqStub;
+
+      req = res = {};
+      req.recipeIds = '479101,479102,479103';
+      spy = res.send = sinon.spy();
+      reqStub = sinon.stub(request, 'get').returns('true');
+
+      controller.getRecipesBulk(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
+        expect(reqStub.calledOnce).to.equal(true);
+        reqStub.restore();
+        done();
+      });
+    });
+  });
 });
