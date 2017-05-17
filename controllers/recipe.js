@@ -80,6 +80,7 @@ module.exports = {
     request.get(options, function(err, response, body) {
       var list = JSON.parse(body);
       var ids = "";
+      
       list.forEach(function(x) {
         ids = ids + x.id + ',';
       })
@@ -147,6 +148,7 @@ function cacheRequest(options, name, callback){
           // if object not in cache perform get from spoon
           request.get(options, function(err, response, body) {
             console.info("Sending query to spoonacular");
+            console.info("Spoonacular Response: " + body.substring(0,15));
             myCache.set(name, body, function(err, success){
               if ( !err && success){
                 console.info(success);
