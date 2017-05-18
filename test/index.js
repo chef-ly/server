@@ -33,17 +33,62 @@ describe('recipe controller tests', function() {
 
   describe('getRecipesBulk', function() {
     it("should respond", function(done) {
-      var req,res,spy,reqStub;
+      var req,res,spy;
 
       req = res = {};
       req.recipeIds = '479101,479102,479103';
       spy = res.send = sinon.spy();
-      reqStub = sinon.stub(request, 'get').returns('true');
 
       controller.getRecipesBulk(req, res, function() {
         expect(spy.calledOnce).to.equal(true);
-        expect(reqStub.calledOnce).to.equal(true);
-        reqStub.restore();
+        done();
+      });
+    });
+  });
+
+  describe('findRandomList', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
+
+      req = res = {};
+      req.params = {};
+      req.params.num = '1';
+      spy = res.send = sinon.spy();
+
+      controller.findRandomList(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
+        done();
+      });
+    });
+  });
+
+  describe('findByIngredients', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
+
+      req = res = {};
+      req.query = {};
+      req.query.ingredients = 'chicken,tomato';
+      spy = res.send = sinon.spy();
+
+      controller.findByIngredients(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
+        done();
+      });
+    });
+  });
+
+  describe('search', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
+
+      req = res = {};
+      req.query = {};
+      req.query.q = 'green curry';
+      spy = res.send = sinon.spy();
+
+      controller.search(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
         done();
       });
     });

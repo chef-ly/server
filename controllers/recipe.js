@@ -37,6 +37,7 @@ module.exports = {
 
     request.get(options, function(err, response, body) {
       res.send(JSON.parse('{"recipes":'+body+'}'));
+      next();
     });
   },
 
@@ -62,6 +63,7 @@ module.exports = {
     cacheRequest(options, "random", function(err, result){
       if(!err){
         res.send(JSON.parse(result));
+        next();
       }
     });
   },
@@ -92,6 +94,7 @@ module.exports = {
 
       request.get(options, function(err, response, body) {
         res.send(JSON.parse('{"recipes":'+body+'}'));
+        next();
       });
     });
   },
@@ -128,6 +131,7 @@ module.exports = {
       cacheRequest(options, q+idKey, function(err, result){
         if(!err){
           res.send(JSON.parse('{"recipes":'+result+'}'));
+          next();
         }
       });
 
