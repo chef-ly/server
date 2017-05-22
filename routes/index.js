@@ -4,6 +4,7 @@ var express = require('express');
 var router = express.Router();
 var jwt = require('express-jwt');
 var jwksRsa = require('jwks-rsa');
+var path = require('path');
 
 /**
  * Authentication middleware
@@ -31,5 +32,10 @@ router.use('/recipe', require('./recipe'));
 router.use('/search', require('./search'));
 router.use('/user', verify, require('./user'));
 router.use('/signup', require('./signup'));
+
+
+router.get('/privacy_policy', function(req, res) {
+    res.sendFile(path.join(__dirname + '/privacy_policy.html'));
+});
 
 module.exports = router;
