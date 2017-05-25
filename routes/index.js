@@ -38,4 +38,8 @@ router.get('/privacy_policy', function(req, res) {
     res.sendFile(path.join(__dirname + '/privacy_policy.html'));
 });
 
+router.get('/robots.txt', function(req, res) {
+    res.sendFile(path.join(__dirname + '/robots.txt'));
+});
+
 module.exports = router;

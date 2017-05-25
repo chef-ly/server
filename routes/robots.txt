@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /list/
+Disallow: /search/
+Disallow: /users/
+Disallow: /signup/
+Disallow: /recipe/
