@@ -1,4 +1,5 @@
 var request = require('request');
+var log = require('../utils/log');
 
 const NodeCache = require("node-cache");
 const myCache = new NodeCache( { stdTTL: 3600, checkperiod: 3600 } );
@@ -143,26 +144,26 @@ function cacheRequest(options, name, callback){
   // using node-cache for storing the body in json
   // Try to access the item in myCache
   name = name.toUpperCase();
-  console.info("Trying to get object from cache: " + name);
+  log.info("Trying to get object from cache: " + name);
   myCache.get(name, function(err, value){
     if (!err) {
       if (value == undefined){
-        console.info("The cache is not set for key: " + name );
+        log.info("The cache is not set for key: " + name );
 
         // if object not in cache perform get from spoon
         request.get(options, function(err, response, body) {
-          console.info("Sending query to spoonacular");
+          log.info("Sending query to spoonacular");
           myCache.set(name, JSON.parse(body), function(err, success){
             if ( !err && success){
-              console.info(success);
-              console.info("Setting cache for key: " + name);
+              log.info(success);
+              log.info("Setting cache for key: " + name);
               //console.info(JSON.parse(body));
             }
           });
           callback(null, body);
         });
       } else {
-        console.info("Serving values from cache for: " + name);
+        log.info("Serving values from cache for: " + name);
         //console.info(value);
         callback(null, value);
       }

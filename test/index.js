@@ -94,3 +94,51 @@ describe('recipe controller tests', function() {
     });
   });
 });
+
+
+describe('user controller tests', function() {
+  describe('identifyUser', function() {
+    it('should respond with "bad request"', function(done) {
+      var req,res,spy;
+      req = res = {};
+      res.status = function(status) {
+        // do nothing
+      }
+      req.headers = {};
+      req.headers.authorization = 'badrequesttoken';
+      spy = res.send = sinon.spy();
+
+      var mongoose = require('mongoose');
+      var myStub = sinon.stub(mongoose, 'model');
+      var userController = require('../controllers/user');
+
+      userController.identifyUser(req, res, function(err) {
+        myStub.restore();
+        expect(spy.calledWith('chef.ly auth0 bad request')).to.equal(true);
+        done();
+      });
+
+    });
+
+    it('should respond with "unauthorized"', function(done) {
+      var req,res,spy;
+      req = res = {};
+      res.status = function(status) {
+        // do nothing
+      }
+      req.headers = {};
+      req.headers.authorization = 'Bearer fbaiebfoawiefowaehowae.iuhfaowefaewfaef.iweuhfaowenfoawieh';
+      spy = res.send = sinon.spy();
+
+      var mongoose = require('mongoose');
+      var myStub = sinon.stub(mongoose, 'model');
+      var userController = require('../controllers/user');
+
+      userController.identifyUser(req, res, function(err) {
+        myStub.restore();
+        expect(spy.calledWith('chef.ly auth0 userinfo token was unauthorized')).to.equal(true);
+        done();
+      });
+    });
+  });
+});
