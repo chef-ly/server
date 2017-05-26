@@ -1,4 +1,5 @@
 var request = require('request');
+var log = require('../utils/log');
 
 const NodeCache = require("node-cache");
 const myCache = new NodeCache( { stdTTL: 3600, checkperiod: 3600 } );
@@ -24,6 +25,7 @@ module.exports = {
     cacheRequest(options, req.params.id, function(err, response){
       if(!err){
         res.send(JSON.parse(response));
+        next();
       }
     })
   },
@@ -36,6 +38,7 @@ module.exports = {
 
     request.get(options, function(err, response, body) {
       res.send(JSON.parse('{"recipes":'+body+'}'));
+      next();
     });
   },
 
@@ -61,9 +64,11 @@ module.exports = {
     cacheRequest(options, "random", function(err, result){
       if(!err){
         res.send(JSON.parse(result));
+        next();
       } else {
         console.error("Request Error: " + err);
         res.status(404).send("Spoonacular Error");
+        next();
       }
     });
   },
@@ -95,6 +100,7 @@ module.exports = {
 
       request.get(options, function(err, response, body) {
         res.send(JSON.parse('{"recipes":'+body+'}'));
+        next();
       });
     });
   },
@@ -135,6 +141,7 @@ module.exports = {
         cacheRequest(options, q+idKey, function(err, result){
           if(!err){
             res.send(JSON.parse('{"recipes":'+result+'}'));
+            next();
           }
         });
       }
@@ -143,54 +150,54 @@ module.exports = {
 }
 
 function cacheRequest(options, name, callback){
-    // using node-cache for storing the body in json
-    // Try to access the item in myCache
-    name = name.toUpperCase();
-    console.info("Trying to get object from cache: " + name);
-    myCache.get(name, function(err, value){
-      if (!err){
-        if (value == undefined){
-          console.info("The cache is not set for key: " + name );
-          console.info("Sending query to spoonacular");
+  // using node-cache for storing the body in json
+  // Try to access the item in myCache
+  name = name.toUpperCase();
+  console.info("Trying to get object from cache: " + name);
+  myCache.get(name, function(err, value){
+    if (!err){
+      if (value == undefined){
+        console.info("The cache is not set for key: " + name );
+        console.info("Sending query to spoonacular");
 
-          // if object not in cache perform get from spoon
-          request.get(options, function(err, response, body) {
-            
-            if(body.includes("{\"message\":\"Ops")){
-              console.info("Error from spoonacular not cacheing " + name);
-              console.info("Spoonacular Response: " + body.substring(0,45));
+        // if object not in cache perform get from spoon
+        request.get(options, function(err, response, body) {
 
-              callback("ERROR from Spoonacular");
-            } else if (body.includes("\"Too many requests.")){
-              console.info("Error from spoonacular not cacheing " + name);
-              console.info("Spoonacular Response: " + body.substring(0,45));
+          if(body.includes("{\"message\":\"Ops")){
+            console.info("Error from spoonacular not cacheing " + name);
+            console.info("Spoonacular Response: " + body.substring(0,45));
 
-              callback("ERROR from Spoonacular");
-              
-            } else if(!body){
-              console.info("Error from spoonacular not cacheing " + name);
-              console.info("Spoonacular Response: " + body.substring(0,45));
+            callback("ERROR from Spoonacular");
+          } else if (body.includes("\"Too many requests.")){
+            console.info("Error from spoonacular not cacheing " + name);
+            console.info("Spoonacular Response: " + body.substring(0,45));
 
-              callback("ERROR from Spoonacular");
+            callback("ERROR from Spoonacular");
 
-            } else{
-              console.info("Spoonacular Response: " + body.substring(0,45));
-              myCache.set(name, body, function(err, success){
-                if ( !err && success){
-                  console.info(success);
-                  console.info("Setting cache for key: " + name);
-                  //console.info(JSON.parse(body));
-                }
-              });
-            
-            callback(null, body);
-            }
-          });
-        } else {
-          console.info("Serving values from cache for: " + name);
-          //console.info(value);
-          callback(null, value);
-        }
+          } else if(!body){
+            console.info("Error from spoonacular not cacheing " + name);
+            console.info("Spoonacular Response: " + body.substring(0,45));
+
+            callback("ERROR from Spoonacular");
+
+          } else{
+            console.info("Spoonacular Response: " + body.substring(0,45));
+            myCache.set(name, body, function(err, success){
+              if ( !err && success){
+                console.info(success);
+                console.info("Setting cache for key: " + name);
+                //console.info(JSON.parse(body));
+              }
+            });
+
+          callback(null, body);
+          }
+        });
+      } else {
+        log.info("Serving values from cache for: " + name);
+        //console.info(value);
+        callback(null, value);
       }
-    })
+    }
+  })
 }

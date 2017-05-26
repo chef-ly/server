@@ -7,7 +7,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --reporter spec"
+    "test": "./node_modules/mocha/bin/mocha --reporter spec --timeout 10000"
   },
   "dependencies": {
     "bcrypt-nodejs": "*",
@@ -21,9 +21,10 @@
     "mocha": "^3.2.0",
     "mongoose": "^4.8.2",
     "morgan": "^1.8.1",
+    "node-cache": "^4.0.0",
     "request": "^2.81.0",
-    "winston": "^2.3.1",
-    "node-cache": "^4.0.0"
+    "sinon": "^2.2.0",
+    "winston": "^2.3.1"
   },
   "repository": {
     "type": "git",

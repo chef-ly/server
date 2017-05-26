@@ -1,5 +1,6 @@
 'use strict';
 
+var sinon = require('sinon');
 var expect = require('chai').expect;
 var request = require('request');
 
@@ -10,114 +11,134 @@ describe('first test', function() {
     });
   });
 });
-/*
-describe('check routes', function() {
-  var port = process.env.PORT || 5000;
-  var url = 'http://localhost:' + port;
 
-  describe('/', function() {
-    it('returns status of 200', function(done) {
-      request(url, function(error, response, body) {
-        expect(response.statusCode).to.equal(200);
+describe('recipe controller tests', function() {
+  var controller = require('../controllers/recipe');
+
+  describe('findRecipeById', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
+
+      req = res = {};
+      req.params = {};
+      req.params.id = '479101';
+      spy = res.send = sinon.spy();
+
+      controller.findRecipeById(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
         done();
       });
     });
   });
 
-  describe('/list', function() {
-    it('return status of 200', function(done) {
-      request(url+'/list', function(error, response, body) {
-        expect(response.statusCode).to.equal(200);
-        done();
-      });
-    });
-  });
-  
-  describe('/recipe/:id', function() {
-    it('return status of 500', function(done) {
-      request(url+'/recipe/1', function(error, response, body) {
-        expect(response.statusCode).to.equal(500);
-        done();
-      });
-    });
-  });
+  describe('getRecipesBulk', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
 
-  describe('/bad', function() {
-    it('return status of 404 not found error', function(done) {
-      request(url+'/bad', function(error, response, body) {
-        expect(response.statusCode).to.equal(404);
+      req = res = {};
+      req.recipeIds = '479101,479102,479103';
+      spy = res.send = sinon.spy();
+
+      controller.getRecipesBulk(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
         done();
       });
     });
   });
 
-  describe('authenticate with test user', function() {
-    var options = {
-      uri: url + '/user/login',
-      method: 'POST',
-      json: {
-        "username": "testuser",
-        "password": "testpw"
-      }
-    };
+  describe('findRandomList', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
 
-    it('return status of 200', function(done) {
-      request.post(options, function(error, response, body) {
-        expect(response.statusCode).to.equal(200);
-        done();
-      });
-    });
+      req = res = {};
+      req.params = {};
+      req.params.num = '1';
+      spy = res.send = sinon.spy();
 
-    it('return jwt token', function(done) {
-      request.post(options, function(error, response, body) {
-        expect(body).to.not.be.undefined;
+      controller.findRandomList(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
         done();
       });
     });
   });
 
-  describe('get a profile page', function() {
-    it('return status of 401 unauthorized', function(done) {
-      request(url+'/user/profile', function(error, response, body) {
-        expect(response.statusCode).to.equal(401);
+  describe('findByIngredients', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
+
+      req = res = {};
+      req.query = {};
+      req.query.ingredients = 'chicken,tomato';
+      spy = res.send = sinon.spy();
+
+      controller.findByIngredients(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
         done();
       });
     });
   });
 
-  describe('register a new user', function() {
-    var options = {
-      uri: url + '/user/register',
-      method: 'POST',
-      json: {
-        "username": "newUsername",
-        "password": "newPassword"
-      }
-    };
+  describe('search', function() {
+    it("should respond", function(done) {
+      var req,res,spy;
 
-    it('return status of 200', function(done) {
-      request.post(options, function(error, response, body) {
-        expect(response.statusCode).to.equal(200);
-        done();
-      });
-    });
-  });
+      req = res = {};
+      req.query = {};
+      req.query.q = 'green curry';
+      spy = res.send = sinon.spy();
 
-  describe('register a bad user', function() {
-    var options = {
-      uri: url + '/user/register',
-      method: 'POST',
-      json: {
-        "username": "newUsername"
-      }
-    };
-
-    it('return status of 400', function(done) {
-      request.post(options, function(error, response, body) {
-        expect(response.statusCode).to.equal(400);
+      controller.search(req, res, function() {
+        expect(spy.calledOnce).to.equal(true);
         done();
       });
     });
   });
 });
-*/
+
+
+describe('user controller tests', function() {
+  describe('identifyUser', function() {
+    it('should respond with "bad request"', function(done) {
+      var req,res,spy;
+      req = res = {};
+      res.status = function(status) {
+        // do nothing
+      }
+      req.headers = {};
+      req.headers.authorization = 'badrequesttoken';
+      spy = res.send = sinon.spy();
+
+      var mongoose = require('mongoose');
+      var myStub = sinon.stub(mongoose, 'model');
+      var userController = require('../controllers/user');
+
+      userController.identifyUser(req, res, function(err) {
+        myStub.restore();
+        expect(spy.calledWith('chef.ly auth0 bad request')).to.equal(true);
+        done();
+      });
+
+    });
+
+    it('should respond with "unauthorized"', function(done) {
+      var req,res,spy;
+      req = res = {};
+      res.status = function(status) {
+        // do nothing
+      }
+      req.headers = {};
+      req.headers.authorization = 'Bearer fbaiebfoawiefowaehowae.iuhfaowefaewfaef.iweuhfaowenfoawieh';
+      spy = res.send = sinon.spy();
+
+      var mongoose = require('mongoose');
+      var myStub = sinon.stub(mongoose, 'model');
+      var userController = require('../controllers/user');
+
+      userController.identifyUser(req, res, function(err) {
+        myStub.restore();
+        expect(spy.calledWith('chef.ly auth0 userinfo token was unauthorized')).to.equal(true);
+        done();
+      });
+    });
+  });
+});

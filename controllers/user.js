@@ -20,6 +20,11 @@ module.exports = {
       if (body == 'Unauthorized') {
         res.status(response.statusCode);
         res.send("chef.ly auth0 userinfo token was unauthorized");
+        next();
+      } else if (body == 'Bad Request') {
+        res.status(response.statusCode);
+        res.send("chef.ly auth0 bad request");
+        next();
       } else {
         var result = JSON.parse(body);
         req.email = result.email;
