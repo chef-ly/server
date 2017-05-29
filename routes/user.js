@@ -14,4 +14,6 @@ router.get('/favorites/add/:id', controller.identifyUser, controller.checkUser, 
 
 router.get('/favorites/remove/:id', controller.identifyUser, controller.remove);
 
+router.get('/delete', controller.identifyUser, controller.getId, controller.deleteUser);
+
 module.exports = router;

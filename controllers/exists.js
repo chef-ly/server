@@ -18,26 +18,31 @@ module.exports = {
 
     request(options, function (error, response, body) {
       if (!error) {
-        var mgmtToken = body.access_token;
-        var bearer = 'Bearer ' + mgmtToken;
-        
-        var options2 = {
-          method: 'GET',
-          url: 'https://chefly.auth0.com/api/v2/users?q=email.raw:' + eml + '',
-          headers: {'Authorization': bearer}
-        }
-
-        request(options2, function(e, r, user) {
-          var u = JSON.parse(user);
-
-          if (u.length > 0 && u[0].email) {
-            res.send(true);
-            next();
-          } else {
-            res.send(false);
-            next();
+        if (!body.access_token) {
+          res.status(500).send('Bad request. No management token found');
+          next();
+        } else {
+          var mgmtToken = body.access_token;
+          var bearer = 'Bearer ' + mgmtToken;
+          
+          var options2 = {
+            method: 'GET',
+            url: 'https://chefly.auth0.com/api/v2/users?q=email.raw:' + eml + '',
+            headers: {'Authorization': bearer}
           }
-        })
+
+          request(options2, function(e, r, user) {
+            var u = JSON.parse(user);
+
+            if (u.length > 0 && u[0].email) {
+              res.send(true);
+              next();
+            } else {
+              res.send(false);
+              next();
+            }
+          })
+        }
       }
     });
   }
