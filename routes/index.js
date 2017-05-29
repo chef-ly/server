@@ -32,6 +32,7 @@ router.use('/recipe', require('./recipe'));
 router.use('/search', require('./search'));
 router.use('/user', verify, require('./user'));
 router.use('/signup', require('./signup'));
+router.use('/exists', require('./exists'));
 
 
 router.get('/privacy_policy', function(req, res) {
