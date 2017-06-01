@@ -45,7 +45,9 @@ module.exports = {
 // Find Random Recipes
   findRandomList: function(req, res, next) {
     // Default to 5 random recipes unless otherwise specified
-    var numberRecipes = 5;
+    var numberRecipes = 10;
+    var q = req.query.q;
+
     if (req.params.num) {
       numberRecipes = req.params.num;
     }
@@ -61,7 +63,7 @@ module.exports = {
 
     // using node-cache for storing the body in json
     // Try to access the item in myCache
-    cacheRequest(options, "random", function(err, result){
+    cacheRequest(options, "random"+q, function(err, result){
       if(!err){
         res.send(JSON.parse(result));
         next();
