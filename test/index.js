@@ -48,11 +48,14 @@ describe('recipe controller tests', function() {
 
   describe('findRandomList', function() {
     it("should respond", function(done) {
-      var req,res,spy;
+      var req,res,spy,q;
 
       req = res = {};
       req.params = {};
       req.params.num = '1';
+      req.query = {};
+      req.query.q = '1';
+
       spy = res.send = sinon.spy();
 
       controller.findRandomList(req, res, function() {
